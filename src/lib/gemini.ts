@@ -1,7 +1,7 @@
 import { ProposalOutput, ProposalRequest } from "./types";
 
-export async function generateProposal(request: ProposalRequest): Promise<ProposalOutput> {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+export async function generateProposal(request: ProposalRequest, customApiKey?: string): Promise<ProposalOutput> {
+  const apiKey = customApiKey || process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
   if (apiKey) {
     try {
