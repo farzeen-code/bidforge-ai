@@ -25,6 +25,7 @@ import {
   ProposalTone,
 } from "@/lib/types";
 import { SAMPLE_JOBS, SampleJob } from "@/lib/mockData";
+import { generateProposal } from "@/lib/gemini";
 
 interface ProposalWorkspaceProps {
   profile: FreelancerProfile;
@@ -80,17 +81,22 @@ export const ProposalWorkspace: React.FC<ProposalWorkspaceProps> = ({
         profile,
       };
 
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      let data: ProposalOutput;
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-      if (!res.ok) {
-        throw new Error("Failed to generate bid");
+        if (res.ok) {
+          data = await res.json();
+        } else {
+          data = await generateProposal(payload);
+        }
+      } catch {
+        data = await generateProposal(payload);
       }
-
-      const data: ProposalOutput = await res.json();
       setProposalOutput(data);
       onDeductCredit();
     } catch (err) {
