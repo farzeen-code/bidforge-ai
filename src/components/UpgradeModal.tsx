@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { X, Check, Zap, Sparkles, Shield, Rocket, ArrowRight } from "lucide-react";
+import React from "react";
+import { X, Check, Sparkles, Shield, Rocket, ArrowRight, ExternalLink } from "lucide-react";
 
 interface UpgradeModalProps {
   isOpen: boolean;
@@ -9,13 +9,15 @@ interface UpgradeModalProps {
   onSelectPlan: (plan: "starter" | "pro") => void;
 }
 
+export const CHECKOUT_URLS = {
+  starter: "https://bidforge.lemonsqueezy.com/checkout/buy/a0bd7f33-1116-4ae1-91d9-01d1d5076465",
+  pro: "https://bidforge.lemonsqueezy.com/checkout/buy/c740ce6a-e803-4072-9a18-1e7865ec4262",
+};
+
 export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   isOpen,
   onClose,
-  onSelectPlan,
 }) => {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "pack">("monthly");
-
   if (!isOpen) return null;
 
   return (
@@ -79,13 +81,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 </li>
               </ul>
             </div>
-            <button
-              onClick={() => onSelectPlan("starter")}
+            <a
+              href={CHECKOUT_URLS.starter}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 font-semibold text-xs text-slate-100 transition-colors flex items-center justify-center gap-2"
             >
               <span>Get 50 Credits ($9)</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
 
           {/* Pro Monthly Unlimited */}
@@ -128,20 +132,22 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 </li>
               </ul>
             </div>
-            <button
-              onClick={() => onSelectPlan("pro")}
+            <a
+              href={CHECKOUT_URLS.pro}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 font-semibold text-xs text-white shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2"
             >
               <span>Start Unlimited Pro</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
         </div>
 
         {/* Guarantee Banner */}
         <div className="mt-6 pt-5 border-t border-slate-800 text-center flex items-center justify-center gap-2 text-xs text-slate-400">
           <Shield className="w-4 h-4 text-slate-500" />
-          <span>Secured via Lemon Squeezy / Stripe • Cancel anytime with 1 click</span>
+          <span>Secured via Lemon Squeezy • Cancel anytime with 1 click</span>
         </div>
       </div>
     </div>
