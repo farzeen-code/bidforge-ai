@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 const DEFAULT_PROFILE: FreelancerProfile = {
-  name: "Farhan",
+  name: "Farzeen",
   professionalTitle: "Full-Stack Engineer & AI Integration Specialist",
   topSkills: [
     "Next.js",
